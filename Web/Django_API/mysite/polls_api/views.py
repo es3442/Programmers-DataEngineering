@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from polls.models import Question
 from polls_api.serializers import QuestionSerializer
 from rest_framework import generics
