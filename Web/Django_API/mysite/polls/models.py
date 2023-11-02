@@ -7,6 +7,8 @@ import datetime
 class Question(models.Model):
     question_text = models.CharField(max_length=200, verbose_name='질문')
     pub_date = models.DateTimeField(auto_now_add=True, verbose_name='생성일')
+    owner = models.ForeignKey(
+        'auth.User', related_name='questions', on_delete=models.CASCADE, null=True)
     # score=models.FloatField(default=0)
     # is_something_wrong=models.BooleanField(default=False)
     # json_field=models.JSONField(default=dict)
