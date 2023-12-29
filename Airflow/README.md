@@ -11,7 +11,7 @@ https://steady-eschoi.tistory.com/122<br>
 |---------------------|------------------------|
 |https://github.com/keeyong/airflow-setup/blob/main/docs/Airflow%202%20Installation.md| https://github.com/keeyong/airflow-setup/blob/main/docs/Airflow%20Docker%20Local%20Setup.md |
 
-
+<br><br>
 ### 핵심파일 정보
 
 ├─ 📁 practice : Airflow를 활용해 데이터파이프라인을 구축
@@ -21,8 +21,3 @@ https://steady-eschoi.tistory.com/122<br>
 └─ 📁 hw
     ├── 파일5
     └── 파일6
-
-
-|:서버에 airflow 설치:|:Docker에 airflow 설치:|
-|---------------------|------------------------|
-|https://github.com/keeyong/airflow-setup/blob/main/docs/Airflow%202%20Installation.md| https://github.com/keeyong/airflow-setup/blob/main/docs/Airflow%20Docker%20Local%20Setup.md |
