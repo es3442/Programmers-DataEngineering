@@ -1,6 +1,6 @@
 # Airflow 설치 및 실습<br>
 ## Airflow를 직접 설치하고 운영하기
-https://steady-eschoi.tistory.com/122
+구축 일지 : https://steady-eschoi.tistory.com/122
 <br><br>
 직접 airflow를 운영하여 사용하는 방법에는
 <br>
