@@ -2,8 +2,11 @@
 ## Airflow를 직접 설치하고 운영하기
 https://steady-eschoi.tistory.com/122<br>
 직접 airflow를 운영하여 사용하는 방법에는 <br>
-**1) 클라우드 서버에 airflow를 설치하여 사용(AWS-EC2-airflow)**,<br>
-**2) Docker를 이용하여 airflow를 이용(GCP-VM-Docker)**하는 방법이 있습니다.<br>
+**1) 클라우드 서버에 airflow를 설치하여 사용**,<br>
+**2) Docker를 이용하여 airflow를 이용**하는 방법이 있습니다.<br>
+1)번 : (AWS-EC2-airflow)
+2)번 : (GCP-VM-Docker)
+<br><br>
 
 ### 참고 문서
 
