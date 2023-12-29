@@ -1,6 +1,6 @@
 # Airflow 설치 및 실습<br>
 ## Airflow를 직접 설치하고 운영하기
-https://steady-eschoi.tistory.com/122<br>
+https://steady-eschoi.tistory.com/122 <br>
 직접 airflow를 운영하여 사용하는 방법에는 <br>
 **1) 클라우드 서버에 airflow를 설치하여 사용**,
 <br>
