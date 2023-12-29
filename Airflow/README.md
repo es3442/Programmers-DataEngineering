@@ -13,7 +13,7 @@ https://steady-eschoi.tistory.com/122<br>
 
 <br><br>
 ### 핵심파일 정보
-
+<pre>
 ├── 📁 practice : Airflow를 활용해 데이터파이프라인을 구축
 │   ├── NameGenderCSVtoRedshift* : CSV 파일을 이용
 │   ├── UpdateSymbol* : yfinance 이용
@@ -21,3 +21,4 @@ https://steady-eschoi.tistory.com/122<br>
 └──📁 hw
     ├── 파일5
     └── 파일6
+</pre>
