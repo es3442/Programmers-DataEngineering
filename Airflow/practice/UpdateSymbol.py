@@ -25,9 +25,11 @@ def get_historical_prices(symbol):
     for index, row in data.iterrows():
         date = index.strftime('%Y-%m-%d %H:%M:%S')
 
-        records.append([date, row["Open"], row["High"], row["Low"], row["Close"], row["Volume"]])
+        records.append([date, row["Open"], row["High"],
+                       row["Low"], row["Close"], row["Volume"]])
 
     return records
+
 
 @task
 def load(schema, table, records):
@@ -60,11 +62,11 @@ CREATE TABLE {schema}.{table} (
 
 
 with DAG(
-    dag_id = 'UpdateSymbol',
-    start_date = datetime(2023,5,30),
+    dag_id='UpdateSymbol',
+    start_date=datetime(2023, 5, 30),
     catchup=False,
     tags=['API'],
-    schedule = '0 10 * * *'
+    schedule='0 10 * * *'
 ) as dag:
 
     results = get_historical_prices("AAPL")

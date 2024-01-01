@@ -8,13 +8,15 @@ import requests
 import logging
 import psycopg2
 
+
 def get_Redshift_connection():
     host = "..."  # Redshift 주소 사용
     redshift_user = "..."  # 본인 ID 사용
     redshift_pass = "..."  # 본인 Password 사용
     port = 5439
     dbname = ".."  # 본인 database 이름 사용
-    conn = psycopg2.connect(f"dbname={dbname} user={redshift_user} host={host} password={redshift_pass} port={port}")
+    conn = psycopg2.connect(
+        f"dbname={dbname} user={redshift_user} host={host} password={redshift_pass} port={port}")
     conn.set_session(autocommit=True)
     return conn.cursor()
 
@@ -30,23 +32,25 @@ def extract(**context):
 
 
 def transform(**context):
-    logging.info("Transform started")    
-    text = context["task_instance"].xcom_pull(key="return_value", task_ids="extract")
-    lines = text.strip().split("\n")[1:] # 첫 번째 라인을 제외하고 처리
+    logging.info("Transform started")
+    text = context["task_instance"].xcom_pull(
+        key="return_value", task_ids="extract")
+    lines = text.strip().split("\n")[1:]  # 첫 번째 라인을 제외하고 처리
     records = []
     for l in lines:
-      (name, gender) = l.split(",") # l = "Keeyong,M" -> [ 'keeyong', 'M' ]
-      records.append([name, gender])
+        (name, gender) = l.split(",")  # l = "Keeyong,M" -> [ 'keeyong', 'M' ]
+        records.append([name, gender])
     logging.info("Transform ended")
     return records
 
 
 def load(**context):
-    logging.info("load started")    
+    logging.info("load started")
     schema = context["params"]["schema"]
     table = context["params"]["table"]
 
-    records = context["task_instance"].xcom_pull(key="return_value", task_ids="transform")
+    records = context["task_instance"].xcom_pull(
+        key="return_value", task_ids="transform")
     """
     records = [
       [ "Keeyong", "M" ],
@@ -58,7 +62,7 @@ def load(**context):
     cur = get_Redshift_connection()
     try:
         cur.execute("BEGIN;")
-        cur.execute(f"DELETE FROM {schema}.name_gender;") 
+        cur.execute(f"DELETE FROM {schema}.name_gender;")
         # DELETE FROM을 먼저 수행 -> FULL REFRESH을 하는 형태
         for r in records:
             name = r[0]
@@ -66,20 +70,20 @@ def load(**context):
             print(name, "-", gender)
             sql = f"INSERT INTO {schema}.name_gender VALUES ('{name}', '{gender}')"
             cur.execute(sql)
-        cur.execute("COMMIT;")   # cur.execute("END;") 
+        cur.execute("COMMIT;")   # cur.execute("END;")
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
-        cur.execute("ROLLBACK;")   
+        cur.execute("ROLLBACK;")
     logging.info("load done")
 
 
 dag = DAG(
-    dag_id = 'name_gender_v3',
-    start_date = datetime(2023,4,6), # 날짜가 미래인 경우 실행이 안됨
-    schedule = '0 2 * * *',  # 적당히 조절
-    catchup = False,
-    max_active_runs = 1,
-    default_args = {
+    dag_id='name_gender_v3',
+    start_date=datetime(2023, 4, 6),  # 날짜가 미래인 경우 실행이 안됨
+    schedule='0 2 * * *',  # 적당히 조절
+    catchup=False,
+    max_active_runs=1,
+    default_args={
         'retries': 1,
         'retry_delay': timedelta(minutes=3),
     }
@@ -87,27 +91,27 @@ dag = DAG(
 
 
 extract = PythonOperator(
-    task_id = 'extract',
-    python_callable = extract,
-    params = {
+    task_id='extract',
+    python_callable=extract,
+    params={
         'url':  Variable.get("csv_url")
     },
-    dag = dag)
+    dag=dag)
 
 transform = PythonOperator(
-    task_id = 'transform',
-    python_callable = transform,
-    params = { 
-    },  
-    dag = dag)
+    task_id='transform',
+    python_callable=transform,
+    params={
+    },
+    dag=dag)
 
 load = PythonOperator(
-    task_id = 'load',
-    python_callable = load,
-    params = {
+    task_id='load',
+    python_callable=load,
+    params={
         'schema': 'es3442',
         'table': 'name_gender'
     },
-    dag = dag)
+    dag=dag)
 
 extract >> transform >> load
