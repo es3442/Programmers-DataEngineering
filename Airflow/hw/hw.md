@@ -6,6 +6,6 @@ _API -> Extract, Transform, Load -> Redshift_
 
 ### 파일 정보
 
-| CountryPopulationAreatoRedshift | CountryPopulationAreatoRedshift_v2 |
-| ------------------------------- | ---------------------------------- |
-| Full Refresh                    | Incremental Update                 |
+| CountryPopulationAreatoRedshift | UpdateSymbol_v3                       |
+| ------------------------------- | ------------------------------------- |
+| Full Refresh                    | Incremental Update : ROW_NUMBER()이용 |
